@@ -45,10 +45,11 @@ rand('state', 0);
 randn('state', 0);
 
 opts= struct;
-opts.depth= 5;
-opts.numTrees= 400;
-opts.numSplits= 30;
-opts.classifierID= 3; % weak learners to use. Can be an array for mix of weak learners
+opts.depth= 9;
+opts.numTrees= 100;
+opts.numSplits= 5;
+opts.verbose= true;
+opts.classifierID= 2; % weak learners to use. Can be an array for mix of weak learners too
 
 tic;
 m= forestTrain(X, Y, opts);
@@ -57,6 +58,27 @@ tic;
 yhatTrain = forestTest(m, X);
 timetest= toc;
 
+% Look at classifier distribution for fun, to see what classifiers were
+% chosen at split nodes and how often
+fprintf('Classifier distributions:\n');
+classifierDist= zeros(1, 4);
+unused= 0;
+for i=1:length(m.treeModels)
+    for j=1:length(m.treeModels{i}.weakModels)
+        cc= m.treeModels{i}.weakModels{j}.classifierID;
+        if cc>1 %otherwise no classifier was used at that node
+            classifierDist(cc)= classifierDist(cc) + 1;
+        else
+            unused= unused+1;
+        end
+    end
+end
+fprintf('%d nodes were empty and had no classifier.\n', unused);
+for i=1:4
+    fprintf('Classifier with id=%d was used at %d nodes.\n', i, classifierDist(i));
+end
+
+% Plot
 xrange = [-1.5 1.5];
 yrange = [-1.5 1.5];
 inc = 0.02;
