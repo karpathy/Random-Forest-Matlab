@@ -18,7 +18,13 @@ Yhard= zeros(N, 1);
 u= model.classes;
 if nargout>1, Ysoft= zeros(N, length(u)); end
 
-dataix= zeros(N, nd); % boolean indicator of data at each node
+% if we can afford to store as non-sparse (100MB array, say), it is
+% slightly faster.
+if storage([N nd]) < 100 
+    dataix= zeros(N, nd); % boolean indicator of data at each node
+else
+    dataix= sparse(N, nd); 
+end
 
 % Propagate data down the tree using weak classifiers at each node
 for n = 1: numInternals

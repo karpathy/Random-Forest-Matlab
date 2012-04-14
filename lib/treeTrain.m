@@ -16,7 +16,14 @@ numInternals = (nd+1)/2 - 1;
 numLeafs= (nd+1)/2;
 
 weakModels= cell(1, numInternals); 
-dataix= zeros(N, nd); % boolean indicator of data at each node
+% if we can afford to store as non-sparse (100MB array, say), it is
+% slightly faster.
+if storage([N nd]) < 100 
+    dataix= zeros(N, nd); % boolean indicator of data at each node
+else
+    dataix= sparse(N, nd); 
+end
+    
 leafdist= zeros(numLeafs, length(u)); % leaf distribution
 
 % Propagate data down the tree while training weak classifiers at each node
