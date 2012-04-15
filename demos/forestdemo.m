@@ -1,3 +1,4 @@
+%% generate data
 
 prettySpiral = true;
 
@@ -40,7 +41,9 @@ else
 
     scatter(X(:,1), X(:,2), 20, Y)
 end
-%% 
+
+%% classify
+
 rand('state', 0);
 randn('state', 0);
 
@@ -78,7 +81,7 @@ for i=1:4
     fprintf('Classifier with id=%d was used at %d nodes.\n', i, classifierDist(i));
 end
 
-% Plot
+%% plot results
 xrange = [-1.5 1.5];
 yrange = [-1.5 1.5];
 inc = 0.02;
