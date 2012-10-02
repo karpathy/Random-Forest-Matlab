@@ -180,9 +180,9 @@ end
 % Helper function for class entropy used with Decision Stump
 function H= classEntropy(y, u)
 
-    cdist= histc(y, u);
+    cdist= histc(y, u) + 1;
+    cdist= cdist/sum(cdist);
     cdist= cdist .* log(cdist);
-    cdist(isnan(cdist))= 0;
-    H= sum(cdist);
+    H= -sum(cdist);
     
 end
