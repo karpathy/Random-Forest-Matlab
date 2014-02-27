@@ -1,6 +1,9 @@
+Random Forest for Matlab
 
-Andrej's Machine Learning toolbox 
-by Andrej Karpathy (@karpathy)
+This toolbox was written for my own education and to give me a chance to explore the models a bit.
+It is NOT intended for any serious applications and it does not NOT do many of things you would
+want a mature implementation to do, like leaf pruning. If you wish to use a strong implementation
+I recommend Scikit Learn / Python. For Matlab I do not really have a recommendation.
 
 ---------------------------------------------------------------------------
 Usage:
@@ -11,18 +14,11 @@ m= forestTrain(X, Y, opts);
 yhat = forestTest(m, X);
 fprintf('Training accuracy = %.2f\n', mean(yhat==Y));
 
-SVMs for classification: (see demo for more)
-opts.C= 1e-2;
-opts.addOnes= true;
-opts.type= 4; % use L2-svm (squared hinge loss)
-m= svmTrain(X, Y, opts);
-yhat= svmTest(m, X);
-
 ---------------------------------------------------------------------------
 More info:
 
-Currently contains random forests and SVM's for classification. 
-The Random Forest code is not industrial strength implementation and is currently meant more for research purposes. However, it is possible I'll want to speed this up in the near future and make it more robust.
+Currently contains random forests.
+The Random Forest code is not industrial strength implementation.
 
 Inspired by MSR's recent work on Random Forests:
 https://research.microsoft.com/apps/pubs/default.aspx?id=155552
